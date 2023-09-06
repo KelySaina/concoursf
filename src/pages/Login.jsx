@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, Divider, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, Divider, Modal, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,15 +11,22 @@ import Assistant from './Assistant';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [mail, setMail] = useState('');
     const [loggedIn, setLoggedIn] = useState(false)
     const [rememberMe, setRememberMe] = useState(true)
     const [errMsg, setErrMsg] = useState("")
     const [d, setD] = useState('')
     const [acc, setAcc] = useState('')
+    const [open, setOpen] = useState(false);
+
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
         setErrMsg("")
+    };
+
+    const handleMailChange = (e) => {
+        setMail(e.target.value);
     };
 
     const handlePasswordChange = (e) => {
@@ -30,6 +37,19 @@ function Login() {
     const checkRemember = (event) => {
         setRememberMe(event.target.checked);
         setErrMsg("")
+    }
+
+    const sendMail = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await axios.post(`http://localhost:5000/mail`, {
+                recipient: mail,
+            })
+            const data = response.data
+            console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
@@ -47,7 +67,7 @@ function Login() {
             setD(data);
             setAcc(accType)
         } catch (error) {
-            console.error("Error fetching remember data:", error);
+            return
         }
         if (username.trim() === '' || username.trim() === '') {
             setErrMsg("Wrong Username/Password")
@@ -72,7 +92,7 @@ function Login() {
                     password: password
                 };
 
-                document.cookie = `userCredentials=${JSON.stringify(userCredentials)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/`;
+                document.cookie = `userCredentials=${JSON.stringify(userCredentials)}; expires=Thu, 01 Jan 2030 00:00:00 UTC; path=/; SameSite=None`;
 
             }
             const setRemember = await axios.post(`http://localhost:5000/setRemember`, {
@@ -83,6 +103,10 @@ function Login() {
             const dataR = setRemember.data
 
         }
+
+
+
+
 
     };
     return (
@@ -112,33 +136,51 @@ function Login() {
                                 background: 'linear-gradient(135deg, #c1de6e 20%, #036EFF 60%)'
                             }}
                         >
-                            <Card sx={{ maxWidth: 450, padding: 3, paddingTop: { xs: 2, lg: 7 }, borderRadius: '20px' }}>
-                                <form onSubmit={handleSubmit}>
-                                    <Typography sx={{ display: 'flex', flexDirection: 'column', width: { xs: '100%', lg: 450 }, justifyContent: 'center', alignItems: 'center', }}>
-                                        <Typography style={{ color: "#FF5757" }}>{errMsg}</Typography>
-                                        <TextField style={{ marginTop: '20px' }} size="medium" label="Username" type="text" name="username" value={username} onChange={handleUsernameChange} fullWidth />
-                                        <TextField style={{ marginTop: '20px' }} size="medium" label="Password" type="password" name="password" value={password} onChange={handlePasswordChange} fullWidth />
-                                        <Link to="/" style={{ marginTop: '20px', textDecoration: 'none', color: 'gray' }}>Forgot password?</Link>
-                                        <Button style={{ marginTop: '20px', background: '#036EFF' }} type="submit" variant='contained' fullWidth>Login</Button>
 
-                                        <FormGroup style={{ marginBottom: '20px' }}>
-                                            <FormControlLabel control={<Checkbox />} label="Remember me" onChange={checkRemember} checked={rememberMe} />
-                                        </FormGroup>
-                                    </Typography>
+                            <Card sx={{ maxWidth: 450, height: '60vh', padding: 3, paddingTop: { xs: 2, lg: 7 }, borderRadius: '20px' }}>
+                                {
+                                    open ? (
 
-                                    <Divider style={{ width: '100%' }} />
+                                        <form onSubmit={handleSubmit}>
+                                            <Typography sx={{ display: 'flex', flexDirection: 'column', width: { xs: '100%', lg: 450 }, justifyContent: 'center', alignItems: 'center', }}>
+                                                <Typography style={{ color: "#FF5757" }}>{errMsg}</Typography>
+                                                <TextField style={{ marginTop: '20px' }} size="medium" label="Username" type="text" name="username" value={username} onChange={handleUsernameChange} fullWidth />
+                                                <TextField style={{ marginTop: '20px' }} size="medium" label="Password" type="password" name="password" value={password} onChange={handlePasswordChange} fullWidth />
+                                                <Button style={{ marginTop: '20px', color: 'gray' }} onClick={() => setOpen(false)} >Forgot password?</Button>
+                                                <Button style={{ marginTop: '20px', background: '#036EFF' }} type="submit" variant='contained' fullWidth>Login</Button>
+                                                <Button style={{ marginTop: '20px', borderColor: '#c1de6e', color: '#c1de6e' }} type="submit" variant='outlined' fullWidth>Login as Assistant</Button>
 
-                                    <Typography>
-                                        <Typography style={{ color: 'blue', marginTop: '10px' }}>No account yet?</Typography>
-                                        <Link to="/signin" style={{ width: '100%' }}><Button style={{ marginTop: '10px', background: '#c1de6e', width: '100%' }} type="button" variant='contained'>Sign up</Button></Link>
-                                    </Typography>
-                                </form>
+                                                <FormGroup style={{ marginBottom: '20px' }}>
+                                                    <FormControlLabel control={<Checkbox />} label="Remember me" onChange={checkRemember} checked={rememberMe} />
+                                                </FormGroup>
+                                            </Typography>
+
+                                            <Divider style={{ width: '100%' }} />
+
+                                            <Typography>
+                                                <Typography style={{ color: 'blue', marginTop: '10px' }}>No account yet?</Typography>
+                                                <Link to="/signin" style={{ width: '100%' }}><Button style={{ marginTop: '10px', background: '#c1de6e', width: '100%' }} type="button" variant='contained'>Sign up</Button></Link>
+                                            </Typography>
+                                        </form>) : (
+                                        <>
+                                            <form onSubmit={sendMail}>
+                                                <Button onClick={() => { setOpen(true) }}>Back</Button>
+                                                <Typography style={{ marginTop: '20px' }}>Please, fill in your mail adress to reinitialize your password</Typography>
+                                                <TextField style={{ marginTop: '20px' }} size='small' label='E-mail adress' value={mail} onChange={handleMailChange} fullWidth />
+                                                <Button style={{ marginTop: '20px' }} type='submit' variant="contained" fullWidth>Submit</Button>
+                                            </form>
+                                        </>
+                                    )
+
+                                }
                             </Card>
 
                         </Typography>
                     </Typography>
                     )
             }
+
+
         </>
     )
 }

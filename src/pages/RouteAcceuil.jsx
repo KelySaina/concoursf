@@ -33,7 +33,7 @@ function RouteAcceuil() {
       setD(data);
       setAcc(accType)
     } catch (error) {
-      console.error("Error fetching remember data:", error);
+      return
     }
   }
 

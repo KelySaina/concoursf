@@ -47,8 +47,8 @@ function SignIn() {
         }
     };
 
-    const buttonStyle = { marginTop: '10px', background: isClicked ? '#036EFF' : '#c1de6e', width: '45%', color: isClicked ? '#fff' : '#036EFF' }
-    const buttonStyle2 = { marginTop: '10px', background: isClicked2 ? '#036EFF' : '#c1de6e', width: '45%', color: isClicked2 ? '#fff' : '#036EFF' }
+    const buttonStyle = { marginTop: '10px', background: isClicked ? '#c1de6e' : '#FFF', width: '45%', color: isClicked ? '#fff' : '#036EFF' }
+    const buttonStyle2 = { marginTop: '10px', background: isClicked2 ? '#c1de6e' : '#FFF', width: '45%', color: isClicked2 ? '#fff' : '#036EFF' }
     return (
         <>
             <Typography
