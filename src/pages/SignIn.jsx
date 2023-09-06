@@ -8,8 +8,9 @@ import Checkbox from '@mui/material/Checkbox';
 function SignIn() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isClicked,setIsClicked] = useState(false);
-    const [isClicked2,setIsClicked2] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+    const [isClicked2, setIsClicked2] = useState(false);
+
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -19,11 +20,11 @@ function SignIn() {
         setPassword(e.target.value);
     };
 
-    const handleAssistant = () =>{
+    const handleAssistant = () => {
         setIsClicked(!isClicked)
         setIsClicked2(false)
     }
-    const handleClient = () =>{
+    const handleClient = () => {
         setIsClicked2(!isClicked2)
         setIsClicked(false)
     }
@@ -46,66 +47,66 @@ function SignIn() {
         }
     };
 
-    const buttonStyle = { marginTop: '10px', background: isClicked ? '#137ee7' : '#94da18' , width:'45%', color:isClicked ? '#fff' : '#137ee7' }
-    const buttonStyle2 = { marginTop: '10px', background: isClicked2 ? '#137ee7' : '#94da18' , width:'45%', color:isClicked2 ? '#fff' : '#137ee7' }
+    const buttonStyle = { marginTop: '10px', background: isClicked ? '#036EFF' : '#c1de6e', width: '45%', color: isClicked ? '#fff' : '#036EFF' }
+    const buttonStyle2 = { marginTop: '10px', background: isClicked2 ? '#036EFF' : '#c1de6e', width: '45%', color: isClicked2 ? '#fff' : '#036EFF' }
     return (
         <>
-        <Typography 
-            sx={{
-                display:{xs:'block', lg:'flex'}
-        }}>
-        <Typography
-            sx={{
-                width: { xs: '0%', lg: '40%' },
-                display: { xs: 'none', lg: 'block' }
-            }}
-        >
-            <img src='/images/logo.png' alt='logo'/>
-        </Typography>
-        <Typography
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100vh',
-                width:{xs:'100%', lg:'60%'},
-                background: 'linear-gradient(135deg, rgba(148,218,24,1) 15%, rgba(19,126,231,1) 60%)'
-            }}
-        >
-            <Card sx={{ maxWidth: 450, padding: 2, paddingTop: {xs:2 , lg:7}, borderRadius:'20px', margin:1}}>
-                <Typography sx={{ display: 'flex', flexDirection: 'column', width: {xs:'100%', lg:450}, justifyContent:'center', alignItems:'center',  }}>
-                    
-                    <TextField style={{ marginTop: '20px'}} size="small" label="Name" type="text" name="username" value={username} onChange={handleUsernameChange} fullWidth/>
-                    <TextField style={{ marginTop: '20px' }} size="small" label="Surname" type="password" name="password" value={password} onChange={handlePasswordChange} fullWidth/>
-                    <TextField style={{ marginTop: '20px'}} size="small" label="E-mail" type="text" name="username" value={username} onChange={handleUsernameChange} fullWidth/>
-                    <TextField style={{ marginTop: '20px' }} size="small" label="Password" type="password" name="password" value={password} onChange={handlePasswordChange} fullWidth/>
-                    <TextField style={{ marginTop: '20px'}} size="small" label="Confirm password" type="text" name="username" value={username} onChange={handleUsernameChange} fullWidth/>
-                    
-
-                    
-
-
-                    <Typography sx={{color: 'blue', marginTop:'20px', fontSize:{xs:'15px', lg:'22px'}, fontWeight:'bold'}}>Sign up as {isClicked?"Assistant":""}{isClicked2?"Client":""} </Typography>
-
-                    <Typography style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%' }} fullWidth>
-                        <Button style={buttonStyle} type="submit" onClick={handleAssistant} variant='contained' >Assistant</Button>
-                        <Button style={buttonStyle2} type="submit" onClick={handleClient} variant='contained' >Client</Button>
-                    </Typography>
-
-                    <FormGroup style={{ display:'flex', alignItems:'center', justifyContent:'center'}}>
-                        <FormControlLabel  control={<Checkbox />} label={<Typography sx={{fontSize:{xs:'11px', lg:'17px'}}}>I have read and agree to the terms and conditions</Typography>} />
-                    </FormGroup>
-
-                    <Button style={{ marginTop: '10px', background: '#137ee7' }} type="submit" onClick={handleSubmit} variant='contained' fullWidth>Sign Up</Button>
-                    <Typography style={{ display:'flex', alignItems:'center', justifyContent:'center'}}>
-                    <FormGroup>
-                        <FormControlLabel control={<Checkbox />} label="Remember me" />
-                    </FormGroup>
-                    </Typography>
+            <Typography
+                sx={{
+                    display: { xs: 'block', lg: 'flex' }
+                }}>
+                <Typography
+                    sx={{
+                        width: { xs: '0%', lg: '40%' },
+                        display: { xs: 'none', lg: 'block' }
+                    }}
+                >
+                    <img src='/images/logo.png' alt='logo' />
                 </Typography>
-            </Card>
-        </Typography>
-        </Typography>
+                <Typography
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        minHeight: '100vh',
+                        width: { xs: '100%', lg: '60%' },
+                        background: 'linear-gradient(135deg, rgba(148,218,24,1) 15%, rgba(19,126,231,1) 60%)'
+                    }}
+                >
+                    <Card sx={{ maxWidth: 450, padding: 2, paddingTop: { xs: 2, lg: 7 }, borderRadius: '20px', margin: 1 }}>
+                        <Typography sx={{ display: 'flex', flexDirection: 'column', width: { xs: '100%', lg: 450 }, justifyContent: 'center', alignItems: 'center', }}>
+
+                            <TextField style={{ marginTop: '20px' }} size="small" label="Name" type="text" name="username" value={username} onChange={handleUsernameChange} fullWidth />
+                            <TextField style={{ marginTop: '20px' }} size="small" label="Surname" type="text" name="password" value={password} onChange={handlePasswordChange} fullWidth />
+                            <TextField style={{ marginTop: '20px' }} size="small" label="E-mail" type="text" name="mail" value={username} onChange={handleUsernameChange} fullWidth />
+                            <TextField style={{ marginTop: '20px' }} size="small" label="Password" type="password" name="password" value={password} onChange={handlePasswordChange} fullWidth />
+                            <TextField style={{ marginTop: '20px' }} size="small" label="Confirm password" type="password" name="cpassword" value={username} onChange={handleUsernameChange} fullWidth />
+
+
+
+
+
+                            <Typography sx={{ color: 'blue', marginTop: '20px', fontSize: { xs: '15px', lg: '22px' }, fontWeight: 'bold' }}>Sign up as {isClicked ? "Assistant" : ""}{isClicked2 ? "Client" : ""} </Typography>
+
+                            <Typography style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }} fullWidth>
+                                <Button style={buttonStyle} type="submit" onClick={handleAssistant} variant='contained' >Assistant</Button>
+                                <Button style={buttonStyle2} type="submit" onClick={handleClient} variant='contained' >Client</Button>
+                            </Typography>
+
+                            <FormGroup style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <FormControlLabel control={<Checkbox />} label={<Typography sx={{ fontSize: { xs: '11px', lg: '17px' } }}>I have read and agree to the terms and conditions</Typography>} />
+                            </FormGroup>
+
+                            <Button style={{ marginTop: '10px', background: '#036EFF' }} type="submit" onClick={handleSubmit} variant='contained' fullWidth>Sign Up</Button>
+                            <Typography style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <FormGroup>
+                                    <FormControlLabel control={<Checkbox />} label="Remember me" />
+                                </FormGroup>
+                            </Typography>
+                        </Typography>
+                    </Card>
+                </Typography>
+            </Typography>
         </>
     )
 }
